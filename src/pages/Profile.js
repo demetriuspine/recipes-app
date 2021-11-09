@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 
 function Profile() {
   const [userEmail, setUserEmail] = useState('');
-  const { history } = useHistory();
+  const history = useHistory();
 
   useEffect(() => {
     const userLocal = localStorage.getItem('user');
@@ -15,19 +15,23 @@ function Profile() {
   return (
     <main>
       <h2 data-testid="profile-email">
-        { userEmail }
+        { userEmail.email }
       </h2>
       <button
         data-testid="profile-done-btn"
         type="button"
-        onClick={ () => history.push('/receitas-feitas') }
+        onClick={ () => {
+          history.push('/receitas-feitas');
+        } }
       >
         Receitas Feitas
       </button>
       <button
         data-testid="profile-favorite-btn"
         type="button"
-        onClick={ () => history.push('/receitas-favoritas') }
+        onClick={ () => {
+          history.push('/receitas-favoritas');
+        } }
       >
         Receitas Favoritas
       </button>
