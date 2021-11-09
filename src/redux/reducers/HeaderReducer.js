@@ -4,7 +4,7 @@ const INITIAL_STATE = {
   searchButton: false,
 };
 
-const HeaderReducer = (state = INITIAL_STATE, action) => {
+const header = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case REQUEST_SEARCHBUTTON:
     return {
@@ -15,4 +15,4 @@ const HeaderReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default HeaderReducer;
+export default header;

@@ -1,12 +1,12 @@
 import React from 'react';
 import Header from '../Components/Header';
 
-function DoneRecipes() {
+function ExploreDrinks() {
   return (
     <header>
-      <Header title="Receitas Feitas" search={ false } />
+      <Header title="Explorar Bebidas" search={ false } />
     </header>
   );
 }
 
-export default DoneRecipes;
+export default ExploreDrinks;
