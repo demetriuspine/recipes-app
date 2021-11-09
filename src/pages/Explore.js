@@ -1,9 +1,12 @@
 import React from 'react';
+import Header from '../Components/Header';
 
-export default function Explore() {
+function Explorar() {
   return (
-    <div>
-      Explore
-    </div>
+    <header>
+      <Header title="Explorar" search={ false } />
+    </header>
   );
 }
+
+export default Explorar;

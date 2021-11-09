@@ -1,9 +1,12 @@
 import React from 'react';
+import Header from '../Components/Header';
 
-export default function MealsByArea() {
+function MealsByArea() {
   return (
-    <div>
-      MealsByArea
-    </div>
+    <header>
+      <Header title="Explorar Origem" search />
+    </header>
   );
 }
+
+export default MealsByArea;

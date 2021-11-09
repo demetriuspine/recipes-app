@@ -1,9 +1,11 @@
 import React from 'react';
 
-export default function MealsDetails() {
+function MealsDetails() {
   return (
-    <div>
-      MealsDetails
-    </div>
+    <section>
+      <p>MealsDetails</p>
+    </section>
   );
 }
+
+export default MealsDetails;

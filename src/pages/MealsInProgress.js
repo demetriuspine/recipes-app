@@ -1,9 +1,11 @@
 import React from 'react';
 
-export default function MealsInProgress() {
+function MealsInProgress() {
   return (
-    <div>
-      MealsInProgress
-    </div>
+    <section>
+      <p>MealsInProgress</p>
+    </section>
   );
 }
+
+export default MealsInProgress;
