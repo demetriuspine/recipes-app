@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Drinks() {
+function DrinkDetails() {
   return (
     <section>
-      <h1>Drinks</h1>
+      <p>DrinkDetails</p>
     </section>
   );
 }
 
-export default Drinks;
+export default DrinkDetails;

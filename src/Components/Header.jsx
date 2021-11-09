@@ -55,4 +55,5 @@ Header.defaultProps = {
   title: '',
   search: true,
 };
+
 export default Header;

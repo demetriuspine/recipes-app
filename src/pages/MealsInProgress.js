@@ -3,7 +3,7 @@ import React from 'react';
 function MealsInProgress() {
   return (
     <section>
-      <h1>MealsInProgress</h1>
+      <p>MealsInProgress</p>
     </section>
   );
 }
