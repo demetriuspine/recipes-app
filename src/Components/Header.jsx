@@ -6,7 +6,6 @@ import searchIcon from '../images/searchIcon.svg';
 
 function Header({ title, search }) {
   const [searchInput, setSearchInput] = useState(false);
-
   return (
     <header className="header-container">
       <div>
