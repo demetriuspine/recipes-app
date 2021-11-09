@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, cleanup } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import Meals from '../pages/Meals';
-import userEvent from '@testing-library/user-event'
 import renderWithRouter from './renderWithRouter';
 import renderWithComponent from './renderWithComponent';
 
@@ -27,8 +27,8 @@ describe('19 - 24 - Renders footer component and applies tests', () => {
     expect(cocktail).toHaveAttribute('src', source);
 
     userEvent.click(cocktail);
-    const path = history.location.pathname
-    expect(path).toBe('/bebidas')
+    const path = history.location.pathname;
+    expect(path).toBe('/bebidas');
   });
   it('should contain an explore icon', () => {
     const { history } = renderWithComponent(<Meals />);
@@ -39,8 +39,8 @@ describe('19 - 24 - Renders footer component and applies tests', () => {
     expect(magnifier).toHaveAttribute('src', source);
 
     userEvent.click(magnifier);
-    const path = history.location.pathname
-    expect(path).toBe('/explorar')
+    const path = history.location.pathname;
+    expect(path).toBe('/explorar');
   });
   it('should contain a meals icon', () => {
     const { history } = renderWithComponent(<Meals />);
@@ -51,7 +51,7 @@ describe('19 - 24 - Renders footer component and applies tests', () => {
     expect(dish).toHaveAttribute('src', source);
 
     userEvent.click(dish);
-    const path = history.location.pathname
-    expect(path).toBe('/comidas')
+    const path = history.location.pathname;
+    expect(path).toBe('/comidas');
   });
 });
