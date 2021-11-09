@@ -1,5 +1,9 @@
-import { screen, cleanup, fireEvent } from '@testing-library/react';
+import React from 'react';
+import { screen, cleanup } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import Meals from '../pages/Meals';
 import renderWithRouter from './renderWithRouter';
+import renderWithComponent from './renderWithComponent';
 
 const FOOTER = 'footer';
 const DRINKS_BOTTOM_BTN = 'drinks-bottom-btn';
@@ -14,41 +18,40 @@ describe('19 - 24 - Renders footer component and applies tests', () => {
     const footer = screen.getByTestId(FOOTER);
     expect(footer).toBeInTheDocument();
   });
-  it('should contain 3 icons', () => {
-    renderWithRouter('/');
-    const icons = screen.getAllByRole('img');
-    const THREE = 3;
-
-    expect(icons.length).toBe(THREE);
-  });
   it('should contain a cocktail icon', () => {
-    renderWithRouter('/');
-    const cocktail = screen.getElementById(DRINKS_BOTTOM_BTN);
+    const { history } = renderWithComponent(<Meals />);
+    const cocktail = screen.getByTestId(DRINKS_BOTTOM_BTN);
     expect(cocktail).toBeInTheDocument();
 
-    const source = '/drinkIcon.svg';
-    expect(cocktail.src).toHaveAttribute('src', source);
+    const source = 'drinkIcon.svg';
+    expect(cocktail).toHaveAttribute('src', source);
 
-    fireEvent(click, cocktail);
+    userEvent.click(cocktail);
+    const path = history.location.pathname;
+    expect(path).toBe('/bebidas');
   });
   it('should contain an explore icon', () => {
-    renderWithRouter('/');
-    const magnifier = screen.getElementById(EXPLORE_BOTTOM_BTN);
+    const { history } = renderWithComponent(<Meals />);
+    const magnifier = screen.getByTestId(EXPLORE_BOTTOM_BTN);
     expect(magnifier).toBeInTheDocument();
 
-    const source = '/exploreIcon.svg';
-    expect(magnifier.src).toHaveAttribute('src', source);
+    const source = 'exploreIcon.svg';
+    expect(magnifier).toHaveAttribute('src', source);
 
-    fireEvent(click, magnifier);
+    userEvent.click(magnifier);
+    const path = history.location.pathname;
+    expect(path).toBe('/explorar');
   });
   it('should contain a meals icon', () => {
-    renderWithRouter('/');
-    const dish = screen.getElementById(FOOD_BOTTOM_BTN);
+    const { history } = renderWithComponent(<Meals />);
+    const dish = screen.getByTestId(FOOD_BOTTOM_BTN);
     expect(dish).toBeInTheDocument();
 
-    const source = '/mealIcon.svg';
-    expect(dish.src).toHaveAttribute('src', source);
+    const source = 'mealIcon.svg';
+    expect(dish).toHaveAttribute('src', source);
 
-    fireEvent(click, dish);
+    userEvent.click(dish);
+    const path = history.location.pathname;
+    expect(path).toBe('/comidas');
   });
 });
