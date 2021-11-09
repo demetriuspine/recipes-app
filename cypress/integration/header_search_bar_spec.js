@@ -15,7 +15,7 @@ describe.only('13 - Implemente os elementos da barra de busca respeitando os atr
     cy.get('[data-testid="name-search-radio"]');
     cy.get('[data-testid="first-letter-search-radio"]');
     cy.get('[data-testid="exec-search-btn"]');
-  });
+  }); 
 });
 
 describe('14 - Posicione a barra logo abaixo do header e implemente 3 radio buttons: Ingrediente, Nome e Primeira letra', () => {
