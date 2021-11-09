@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import SearchBar from './SearchBar';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
@@ -41,6 +42,7 @@ function Header({ title, search }) {
           />
         )}
       </div>
+      <SearchBar />
     </header>
   );
 }
