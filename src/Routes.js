@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
 import Meals from './pages/Meals';
 import Drinks from './pages/Drinks';
@@ -19,38 +19,40 @@ import FavoriteRecipes from './pages/FavoritesRecipes';
 
 function Routes() {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={ Login } />
-        <Route path="/comidas" component={ Meals } />
-        <Route path="/bebidas" component={ Drinks } />
-        <Route path="/comidas/{id-da-receita}" component={ MealDetails } />
-        <Route path="/bebidas/{id-da-receita}" component={ DrinkDetails } />
-        <Route
-          path="/comidas/{id-da-receita}/in-progress"
-          component={ MealsInProgress }
-        />
-        <Route
-          path="/bebidas/{id-da-receita}/in-progress"
-          component={ DrinksInProgress }
-        />
-        <Route path="/explorar" component={ Explore } />
-        <Route path="/explorar/comidas" component={ ExploreMeals } />
-        <Route path="/explorar/bebidas" component={ ExploreDrinks } />
-        <Route
-          path="/explorar/comidas/ingredientes"
-          component={ ExploreMealsByIngredients }
-        />
-        <Route
-          path="/explorar/bebidas/ingredientes"
-          component={ ExploreDrinksByIngredients }
-        />
-        <Route path="/explorar/comidas/area" component={ MealsByArea } />
-        <Route path="/perfil" component={ Profile } />
-        <Route path="/receitas-feitas" component={ DoneRecipes } />
-        <Route path="/receitas-favoritas" component={ FavoriteRecipes } />
-      </Switch>
-    </BrowserRouter>
+    <Switch>
+      <Route exact path="/" component={ Login } />
+      <Route exact path="/comidas" component={ Meals } />
+      <Route exact path="/bebidas" component={ Drinks } />
+      <Route exact path="/comidas/{id-da-receita}" component={ MealDetails } />
+      <Route exact path="/bebidas/{id-da-receita}" component={ DrinkDetails } />
+      <Route
+        exact
+        path="/comidas/{id-da-receita}/in-progress"
+        component={ MealsInProgress }
+      />
+      <Route
+        exact
+        path="/bebidas/{id-da-receita}/in-progress"
+        component={ DrinksInProgress }
+      />
+      <Route exact path="/explorar" component={ Explore } />
+      <Route exact path="/explorar/comidas" component={ ExploreMeals } />
+      <Route exact path="/explorar/bebidas" component={ ExploreDrinks } />
+      <Route
+        exact
+        path="/explorar/comidas/ingredientes"
+        component={ ExploreMealsByIngredients }
+      />
+      <Route
+        exact
+        path="/explorar/bebidas/ingredientes"
+        component={ ExploreDrinksByIngredients }
+      />
+      <Route exact path="/explorar/comidas/area" component={ MealsByArea } />
+      <Route exact path="/perfil" component={ Profile } />
+      <Route exact path="/receitas-feitas" component={ DoneRecipes } />
+      <Route exact path="/receitas-favoritas" component={ FavoriteRecipes } />
+    </Switch>
   );
 }
 
