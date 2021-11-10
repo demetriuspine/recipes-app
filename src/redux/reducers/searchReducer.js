@@ -1,7 +1,7 @@
 import { GET_JSON } from '../actions';
 
 const initialState = {
-  results: '',
+  results: [],
 };
 
 export default (state = initialState, { type, payload }) => {
