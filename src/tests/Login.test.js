@@ -1,5 +1,7 @@
+import React from 'react';
 import { screen, cleanup, fireEvent } from '@testing-library/react';
-import renderWithRouter from './renderWithRouter';
+import App from '../App';
+import renderWithRouterAndStore from './renderWithRouterAndStore';
 
 const emailForTesting = 'random@random.co';
 
@@ -17,7 +19,7 @@ afterEach(cleanup);
 
 describe('1 - 5 - Renders App and applies tests for Login component', () => { // testes feito por Guilherme
   it('should contain an email input', () => {
-    renderWithRouter('/');
+    renderWithRouterAndStore(<App />, '/');
     const email = screen.getByTestId(EMAIL_INPUT);
     expect(email).toBeInTheDocument();
     expect(email.type).toBe('text');
@@ -26,7 +28,7 @@ describe('1 - 5 - Renders App and applies tests for Login component', () => { //
     expect(email.value).toBe(emailForTesting);
   });
   it('should contain a password input', () => {
-    renderWithRouter('/');
+    renderWithRouterAndStore(<App />, '/');
     const password = screen.getByTestId(PASSWORD_INPUT);
     expect(password).toBeInTheDocument();
     expect(password.type).toBe('password');
@@ -35,7 +37,7 @@ describe('1 - 5 - Renders App and applies tests for Login component', () => { //
     expect(password.value).toBe('123456');
   });
   it('should contain a submit button, enabled by valid email/password', () => {
-    renderWithRouter('/');
+    renderWithRouterAndStore(<App />, '/');
     const button = screen.getByTestId(LOGIN_BTN);
     expect(button).toBeInTheDocument();
     expect(button).toHaveTextContent('Entrar');
@@ -57,7 +59,7 @@ describe('1 - 5 - Renders App and applies tests for Login component', () => { //
 describe('6 - Checks if Login handles localStorage items ', () => {
   it('should set a token in localStorage', () => {
     global.localStorage = localStorageMock;
-    renderWithRouter('/');
+    renderWithRouterAndStore(<App />, '/');
     const button = screen.getByTestId(LOGIN_BTN);
 
     const password = screen.getByTestId(PASSWORD_INPUT);

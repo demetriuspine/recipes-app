@@ -1,10 +1,13 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { GET_EMAIL } from '../redux/actions';
 
 export default function Login({ history }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isValid, setIsValid] = useState(false);
+  const dispatch = useDispatch();
 
   const emailValidation = (emailToValidate, passwordToValidate) => {
     const regex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
@@ -24,6 +27,7 @@ export default function Login({ history }) {
     localStorage.setItem('cocktailsToken', 1);
     localStorage.setItem('user', JSON.stringify({ email }));
     history.push('/comidas');
+    dispatch({ type: GET_EMAIL, payload: email });
   };
 
   return (
