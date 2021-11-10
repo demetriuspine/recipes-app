@@ -22,6 +22,7 @@ function MealsDetails(id) {
 
   return (
     <section>
+      <h1>Detalhes</h1>
       <img data-testid={ RECIPE_PHOTO } alt={ `${strMeal} dish` } src={ strMealThumb } />
       <h2 data-testid={ RECIPE_TITLE }>{strMeal}</h2>
       <button data-testid={ SHARE_BTN } type="button">

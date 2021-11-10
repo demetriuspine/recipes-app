@@ -31,7 +31,7 @@ function ExploreMeals() {
       <button
         type="button"
         data-testid={ EXPLORE_SURPRISE }
-        onClick={ () => history.push('/comidas/') }
+        onClick={ () => history.push('/comidas/random') }
       >
         Me Surpreenda!
       </button>
