@@ -22,7 +22,7 @@ function Header({ title, search, meals }) {
 
   useEffect(() => {
     dispatch({ type: GET_JSON, payload: results });
-  }, [results]);
+  }, [results, dispatch]);
 
   async function handleClickMeals() {
     switch (radioValue) {

@@ -11,7 +11,7 @@ function Drinks() {
 
   useEffect(() => {
     setDrinkSearch(resultsFromGlobalState);
-  });
+  }, [drinkSearch, resultsFromGlobalState]);
   return (
     <>
       <header>

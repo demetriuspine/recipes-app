@@ -11,7 +11,7 @@ function Meals() {
 
   useEffect(() => {
     setMealSearch(resultsFromGlobalState);
-  });
+  }, [resultsFromGlobalState]);
 
   return (
     <section>
