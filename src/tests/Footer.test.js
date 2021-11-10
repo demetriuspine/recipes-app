@@ -2,8 +2,7 @@ import React from 'react';
 import { screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Meals from '../pages/Meals';
-import renderWithRouter from './renderWithRouter';
-import renderWithComponent from './renderWithComponent';
+import renderWithRouterAndStore from './renderWithRouterAndStore';
 
 const FOOTER = 'footer';
 const DRINKS_BOTTOM_BTN = 'drinks-bottom-btn';
@@ -14,12 +13,12 @@ afterEach(cleanup);
 
 describe('19 - 24 - Renders footer component and applies tests', () => {
   it('should contain a footer element', () => {
-    renderWithRouter('/comidas');
+    renderWithRouterAndStore(<Meals />);
     const footer = screen.getByTestId(FOOTER);
     expect(footer).toBeInTheDocument();
   });
   it('should contain a cocktail icon', () => {
-    const { history } = renderWithComponent(<Meals />);
+    const { history } = renderWithRouterAndStore(<Meals />);
     const cocktail = screen.getByTestId(DRINKS_BOTTOM_BTN);
     expect(cocktail).toBeInTheDocument();
 
@@ -31,7 +30,7 @@ describe('19 - 24 - Renders footer component and applies tests', () => {
     expect(path).toBe('/bebidas');
   });
   it('should contain an explore icon', () => {
-    const { history } = renderWithComponent(<Meals />);
+    const { history } = renderWithRouterAndStore(<Meals />);
     const magnifier = screen.getByTestId(EXPLORE_BOTTOM_BTN);
     expect(magnifier).toBeInTheDocument();
 
@@ -43,7 +42,7 @@ describe('19 - 24 - Renders footer component and applies tests', () => {
     expect(path).toBe('/explorar');
   });
   it('should contain a meals icon', () => {
-    const { history } = renderWithComponent(<Meals />);
+    const { history } = renderWithRouterAndStore(<Meals />);
     const dish = screen.getByTestId(FOOD_BOTTOM_BTN);
     expect(dish).toBeInTheDocument();
 
