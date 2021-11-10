@@ -25,7 +25,7 @@ function Explorar() {
         data-testid={ EXPLORE_DRINKS }
         onClick={ () => history.push('/explorar/bebidas') }
       >
-        Explorar Comidas
+        Explorar Bebidas
       </button>
       <Footer />
     </>

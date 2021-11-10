@@ -6,7 +6,7 @@ function Drinks() {
   return (
     <>
       <header>
-        <Header title="Bebidas" search />
+        <Header title="Bebidas" search meals={ false } />
       </header>
       <Footer />
 

@@ -7,7 +7,7 @@ function Meals() {
     <section>
       <h1> H1 de Teste </h1>
       <header>
-        <Header title="Comidas" search />
+        <Header title="Comidas" search meals />
       </header>
       <Footer />
     </section>

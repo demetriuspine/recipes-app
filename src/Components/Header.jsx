@@ -1,23 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
-import { fetchFirstLetterAPI, fetchIngredientAPI, fetchNameAPI } from '../services/API';
+import { fetchFirstLetterAPI, fetchIngredientAPI,
+  fetchNameAPI } from '../services/mealsAPI';
+import {
+  fetchDrinksIngredientAPI,
+  fetchDrinksNameAPI,
+  fetchDrinksFirstLetterAPI,
+} from '../services/drinksAPI';
+import { GET_JSON } from '../redux/actions';
 
-function Header({ title, search }) {
+function Header({ title, search, meals }) {
   const [searchInput, setSearchInput] = useState(false);
   const [searchInputValue, setSearchInputValue] = useState('');
   const [radioValue, setRadioValue] = useState('');
+  const [results, setResults] = useState('');
+  const dispatch = useDispatch();
 
-  function handleClick() {
+  useEffect(() => {
+    dispatch({ type: GET_JSON, payload: results });
+  }, [results]);
+
+  async function handleClickMeals() {
     switch (radioValue) {
     case 'ingrediente':
-      fetchIngredientAPI(searchInputValue);
+      setResults(await fetchIngredientAPI(searchInputValue));
       setSearchInputValue('');
       break;
     case 'nome':
-      fetchNameAPI(searchInputValue);
+      setResults(await fetchNameAPI(searchInputValue));
       setSearchInputValue('');
       break;
     case 'primeira-letra':
@@ -25,13 +39,54 @@ function Header({ title, search }) {
         global.alert('Sua busca deve conter somente 1 (um) caracter');
         break;
       }
-      fetchFirstLetterAPI(searchInputValue);
+      setResults(await fetchFirstLetterAPI(searchInputValue));
       setSearchInputValue('');
       break;
     default:
       break;
     }
   }
+
+  async function handleClickDrinks() {
+    switch (radioValue) {
+    case 'ingrediente':
+      setResults(await fetchDrinksIngredientAPI(searchInputValue));
+      setSearchInputValue('');
+      break;
+    case 'nome':
+      setResults(await fetchDrinksNameAPI(searchInputValue));
+      setSearchInputValue('');
+      break;
+    case 'primeira-letra':
+      if (searchInputValue.length > 1) {
+        global.alert('Sua busca deve conter somente 1 (um) caracter');
+        break;
+      }
+      setResults(await fetchDrinksFirstLetterAPI(searchInputValue));
+      setSearchInputValue('');
+      break;
+    default:
+      break;
+    }
+  }
+
+  const fetchButtonMeals = (
+    <button
+      type="button"
+      data-testid="exec-search-btn"
+      onClick={ handleClickMeals }
+    >
+      Buscar
+    </button>);
+
+  const fetchButtonDrinks = (
+    <button
+      type="button"
+      data-testid="exec-search-btn"
+      onClick={ handleClickDrinks }
+    >
+      Buscar
+    </button>);
 
   return (
 
@@ -107,14 +162,7 @@ function Header({ title, search }) {
           Primeira Letra
         </label>
       </div>
-      <button
-        type="button"
-        data-testid="exec-search-btn"
-        onClick={ handleClick }
-      >
-        Buscar
-
-      </button>
+      { meals ? fetchButtonMeals : fetchButtonDrinks }
     </header>
   );
 }
@@ -122,11 +170,13 @@ function Header({ title, search }) {
 Header.propTypes = {
   title: PropTypes.string,
   search: PropTypes.bool,
+  meals: PropTypes.bool,
 };
 
 Header.defaultProps = {
   title: '',
   search: true,
+  meals: true,
 };
 
 export default Header;
