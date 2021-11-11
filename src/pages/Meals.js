@@ -17,12 +17,7 @@ function Meals({ history }) {
   }, [resultsFromGlobalState]);
 
   useEffect(() => {
-    console.log(mealSearch.meals);
-    if (mealSearch.meals && mealSearch.meals === null) {
-      global.alert(
-        'Sinto muito, não encontramos nenhuma receita para esses filtros.',
-      );
-    } else if (submitted === true && mealSearch.meals && mealSearch.meals.length === 1) {
+    if (submitted === true && mealSearch.meals && mealSearch.meals.length === 1) {
       history.push(`/comidas/${mealSearch.meals[0].idMeal}`);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
