@@ -6,7 +6,7 @@ function MealsByArea() {
   return (
     <>
       <header>
-        <Header title="Explorar Origem" search />
+        <Header title="Explorar Origem" search meals />
       </header>
       <Footer />
     </>
