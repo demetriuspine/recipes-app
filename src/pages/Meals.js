@@ -25,6 +25,7 @@ function Meals({ history }) {
     } else if (submitted === true && mealSearch.meals && mealSearch.meals.length === 1) {
       history.push(`/comidas/${mealSearch.meals[0].idMeal}`);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mealSearch]);
 
   return (
@@ -32,7 +33,7 @@ function Meals({ history }) {
       <header>
         <Header title="Comidas" search meals />
       </header>
-      { mealSearch.length === 0 ? ''
+      { mealSearch.length === 0 || !mealSearch.meals ? ''
         : mealSearch.meals.map(({ strMeal, strMealThumb, idMeal }, index) => (
           <SearchCard
             key={ idMeal }

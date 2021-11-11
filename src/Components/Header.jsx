@@ -22,6 +22,9 @@ function Header({ title, search, meals }) {
 
   useEffect(() => {
     dispatch({ type: GET_JSON, payload: results });
+    if (results.meals === null) {
+      global.alert('teste');
+    }
   }, [results, dispatch]);
 
   async function handleClickMeals() {
