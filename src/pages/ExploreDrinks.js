@@ -23,7 +23,7 @@ function ExploreDrinks() {
       <button
         type="button"
         data-testid={ EXPLORE_SURPRISE }
-        onClick={ () => history.push('/explorar/bebidas/random') }
+        onClick={ () => history.push('/bebidas/random') }
       >
         Me Surpreenda!
       </button>
