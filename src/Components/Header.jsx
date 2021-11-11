@@ -13,7 +13,7 @@ import {
 } from '../services/drinksAPI';
 import { GET_JSON } from '../redux/actions';
 
-function Header({ title, search, meals }) {
+function Header({ title, search, meals, type }) {
   const [searchInput, setSearchInput] = useState(false);
   const [searchInputValue, setSearchInputValue] = useState('');
   const [radioValue, setRadioValue] = useState('');
@@ -22,8 +22,8 @@ function Header({ title, search, meals }) {
 
   useEffect(() => {
     dispatch({ type: GET_JSON, payload: results });
-    if (results.meals === null) {
-      global.alert('teste');
+    if (results[type] === null) {
+      global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     }
   }, [results, dispatch]);
 
@@ -174,6 +174,7 @@ Header.propTypes = {
   title: PropTypes.string,
   search: PropTypes.bool,
   meals: PropTypes.bool,
+  type: PropTypes.string.isRequired,
 };
 
 Header.defaultProps = {

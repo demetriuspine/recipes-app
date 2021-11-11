@@ -26,7 +26,7 @@ function Meals({ history }) {
   return (
     <section>
       <header>
-        <Header title="Comidas" search meals />
+        <Header title="Comidas" search meals type="meals" />
       </header>
       { mealSearch.length === 0 || !mealSearch.meals ? ''
         : mealSearch.meals.map(({ strMeal, strMealThumb, idMeal }, index) => (
