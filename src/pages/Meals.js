@@ -4,9 +4,9 @@ import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import SearchCard from '../Components/SearchCard';
 
-function Meals(/* { history } */) {
+function Meals({ history }) {
   const [mealSearch, setMealSearch] = useState([]);
-  /* const [submitted, setSubmitted] = useState(false); */
+  const [submitted, setSubmitted] = useState(false);
   const resultsFromGlobalState = useSelector((state) => (
     state.searchReducer.results));
 
@@ -15,16 +15,15 @@ function Meals(/* { history } */) {
     setSubmitted(true);
   }, [resultsFromGlobalState]);
 
-  /*   useEffect(() => {
+  useEffect(() => {
     if (!mealSearch) {
       global.alert(
         'Sinto muito, não encontramos nenhuma receita para esses filtros.',
       );
-    } else if (submitted === true && mealSearch.meals.length === 1) {
-      history.push(`/comidas/${mealSearch[0].idMeal}`);
+    } else if (submitted === true && mealSearch.meals && mealSearch.meals.length === 1) {
+      history.push(`/comidas/${mealSearch.meals[0].idMeal}`);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }); */
+  }, [mealSearch]);
 
   return (
     <section>
@@ -47,28 +46,10 @@ function Meals(/* { history } */) {
   );
 }
 
+Meals.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
 export default Meals;
-
-// meal  return (
-//     <>
-//       <header>
-//         <Header title="Bebidas" search meals={ false } />
-//       </header>
-//       { drinkSearch.length === 0 ? ''
-//         : drinkSearch.drinks.map(({ strDrink, strDrinkThumb, idDrink }) => (
-//           <SearchCard
-//             key={ idDrink }
-//             picture={ strDrinkThumb }
-//             name={ strDrink }
-//             id={ idDrink }
-//             meals={ false }
-//           />
-//         )) }
-//       {}
-//       <Footer />
-
-//     </>
-//   );
-// }
-
-// export default Drinks;
