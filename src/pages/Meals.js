@@ -17,7 +17,8 @@ function Meals({ history }) {
   }, [resultsFromGlobalState]);
 
   useEffect(() => {
-    if (!mealSearch) {
+    console.log(mealSearch.meals);
+    if (mealSearch.meals && mealSearch.meals === null) {
       global.alert(
         'Sinto muito, não encontramos nenhuma receita para esses filtros.',
       );
