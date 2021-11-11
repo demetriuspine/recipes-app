@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 const RECIPE_PHOTO = 'recipe-photo';
 const RECIPE_TITLE = 'recipe-title';
@@ -9,16 +10,47 @@ const INGREDIENT_NAME_AND_MEASURE = (index) => `${index}-ingredient-name-and-mea
 const INSTRUCTIONS = 'instructions';
 const VIDEO = 'video';
 const START_RECIPE_BTN = 'start-recipe-btn';
-
 // Habilitar após criação do card de Receita;
 // const RECOMENDATION_CARD = (index) => `${index}-recomendation-card`;
+const randomEndpoint = 'https://www.themealdb.com/api/json/v1/1/random.php';
+const idEndpoint = (id) => `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
 
-function MealsDetails(id) {
-  const { strMealThumb, strMeal,
-    strCategory, strInstructions, strYouTube } = id;
-  const entries = Object.entries(id);
-  const returnValue = (a, b) => a.includes('Ingredients') && b;
-  const ingredients = entries.filter((e) => returnValue(e[0], e[1]));
+function MealsDetails({ match: { params: { id } } }) {
+  const [recipe, setRecipe] = useState([]);
+  const getRecipe = async () => {
+    await fetch(idEndpoint(id))
+      .then((response) => response.json())
+      .then((data) => setRecipe(data.meals[0]));
+  };
+
+  const getRandom = async () => {
+    await fetch(randomEndpoint)
+      .then((response) => response.json())
+      .then((data) => setRecipe(data.meals[0]));
+  };
+
+  useEffect(() => {
+    if (id === 'random') {
+      getRandom();
+    } else {
+      getRecipe();
+    }
+  }, [id]);
+
+  const { strMealThumb, strMeal, strCategory, strInstructions, strYoutube } = recipe;
+
+  function returnValue(a, b, string) {
+    if (a.toLowerCase().includes(string) && b !== '') {
+      return b;
+    }
+    return undefined;
+  }
+
+  const entries = Object.entries(recipe);
+  const ingredients = entries.map((e) => returnValue(e[0], e[1], 'ingredient'))
+    .filter((e) => e !== undefined);
+  const measurements = entries.map((e) => returnValue(e[0], e[1], 'measure'))
+    .filter((e) => e !== undefined);
 
   return (
     <section>
@@ -35,15 +67,21 @@ function MealsDetails(id) {
       <ul>
         { ingredients.map((e, index) => (
           <li key={ index } data-testid={ INGREDIENT_NAME_AND_MEASURE(index) }>
-            {e}
+            {`${e} - ${measurements[index]}`}
           </li>
         ))}
       </ul>
       <p data-testid={ INSTRUCTIONS }>{strInstructions}</p>
-      <video data-testid={ VIDEO } autoPlay="" muted="">
-        <source src={ strYouTube } />
-        <track kind="captions" src={ strInstructions } />
-      </video>
+      <iframe
+        id="player"
+        type="text/html"
+        width="640"
+        height="360"
+        data-testid={ VIDEO }
+        title="YouTube video player"
+        src={ strYoutube }
+        frameBorder="0"
+      />
       {/* Desabilitado, função necessita do Card de receita
       {
         recommended.map((e, index) => {<RecipeCard key={index} data-testid={ RECOMENDATION_CARD(index) } >{e}</RecipeCard>})
@@ -55,5 +93,17 @@ function MealsDetails(id) {
     </section>
   );
 }
+
+MealsDetails.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }),
+  }),
+};
+
+MealsDetails.defaultProps = {
+  match: {},
+};
 
 export default MealsDetails;
