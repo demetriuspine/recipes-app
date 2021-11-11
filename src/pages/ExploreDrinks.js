@@ -6,8 +6,18 @@ import Header from '../Components/Header';
 const EXPLORE_BY_INGREDIENT = 'explore-by-ingredient';
 const EXPLORE_SURPRISE = 'explore-surprise';
 
+const randomEndpoint = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
+
 function ExploreDrinks() {
   const history = useHistory();
+
+  async function handleClick() {
+    const { drinks } = await fetch(randomEndpoint)
+      .then((response) => response.json());
+    const routeNumber = drinks[0].idDrink;
+    history.push(`/bebidas/${routeNumber}`);
+  }
+
   return (
     <>
       <header>
@@ -23,7 +33,7 @@ function ExploreDrinks() {
       <button
         type="button"
         data-testid={ EXPLORE_SURPRISE }
-        onClick={ () => history.push('/bebidas/random') }
+        onClick={ () => handleClick() }
       >
         Me Surpreenda!
       </button>
