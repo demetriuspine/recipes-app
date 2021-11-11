@@ -1,5 +1,7 @@
+import React from 'react';
 import { screen, cleanup, fireEvent } from '@testing-library/react';
-import renderWithRouter from './renderWithRouter';
+import Meals from '../pages/Meals';
+import renderWithRouterAndStore from './renderWithRouterAndStore';
 
 const PROFILE_TOP_BTN = 'profile-top-btn';
 const PAGE_TITLE = 'page-title';
@@ -10,10 +12,11 @@ afterEach(cleanup);
 
 describe('Req 9: Header has a title and renders a profile and search button', () => {
   it('should contain a profile button', () => {
-    renderWithRouter('/comidas');
+    renderWithRouterAndStore(<Meals />);
     const profileButton = screen.getByTestId(PROFILE_TOP_BTN);
     const headerTitle = screen.getByTestId(PAGE_TITLE);
     const searchButton = screen.getByTestId(SEARCH_TOP_BTN);
+    fireEvent.click(searchButton);
     const searchInput = screen.getByTestId(SEARCH_INPUT);
     expect(profileButton).toBeInTheDocument();
     expect(headerTitle).toBeInTheDocument();
@@ -24,13 +27,13 @@ describe('Req 9: Header has a title and renders a profile and search button', ()
 
 describe('Req: 10: Header has a Profile and Search Icons', () => {
   it('should not render the Header on Login page', () => {
-    renderWithRouter('/');
+    renderWithRouterAndStore('/');
     const headerTitle = screen.getByTestId(PAGE_TITLE);
     expect(headerTitle).not.toBeInTheDocument();
   });
 
   it('should render the Header on DoneRecipes page', () => {
-    renderWithRouter('/pages/DoneRecipes');
+    renderWithRouterAndStore('/pages/DoneRecipes');
     const title = screen.queryByText(RECEITAS_FEITAS);
     const searchButton = screen.getByTestId(SEARCH_TOP_BTN);
     expect(title).toBeInTheDocument();
@@ -38,7 +41,7 @@ describe('Req: 10: Header has a Profile and Search Icons', () => {
   });
 
   it('should not render the Header on DrinkDetails page', () => {
-    renderWithRouter('/pages/DrinkDetails');
+    renderWithRouterAndStore('/pages/DrinkDetails');
     const headerTitle = screen.getByTestId(PAGE_TITLE);
     expect(headerTitle).not.toBeInTheDocument();
   });
