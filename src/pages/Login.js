@@ -31,8 +31,8 @@ export default function Login({ history }) {
   };
 
   return (
-    <main>
-      <section>
+    <main className="login">
+      <section className="login-form">
         <input
           type="text"
           placeholder="Email"

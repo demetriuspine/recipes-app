@@ -13,13 +13,12 @@ const START_RECIPE_BTN = 'start-recipe-btn';
 // Habilitar após criação do card de Receita;
 // const RECOMENDATION_CARD = (index) => `${index}-recomendation-card`;
 const randomEndpoint = 'https://www.themealdb.com/api/json/v1/1/random.php';
-const idEndpoint = (number) => `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${number}`;
-const ID_NUMBER = 52945;
+const idEndpoint = (id) => `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
 
 function MealsDetails({ match: { params: { id } } }) {
   const [recipe, setRecipe] = useState([]);
   const getRecipe = async () => {
-    await fetch(idEndpoint(ID_NUMBER))
+    await fetch(idEndpoint(id))
       .then((response) => response.json())
       .then((data) => setRecipe(data.meals[0]));
   };
@@ -73,10 +72,16 @@ function MealsDetails({ match: { params: { id } } }) {
         ))}
       </ul>
       <p data-testid={ INSTRUCTIONS }>{strInstructions}</p>
-      <video data-testid={ VIDEO } autoPlay="" muted="">
-        <source src={ strYoutube } />
-        <track kind="captions" src={ strInstructions } />
-      </video>
+      <iframe
+        id="player"
+        type="text/html"
+        width="640"
+        height="360"
+        data-testid={ VIDEO }
+        title="YouTube video player"
+        src={ strYoutube }
+        frameBorder="0"
+      />
       {/* Desabilitado, função necessita do Card de receita
       {
         recommended.map((e, index) => {<RecipeCard key={index} data-testid={ RECOMENDATION_CARD(index) } >{e}</RecipeCard>})
@@ -100,4 +105,5 @@ MealsDetails.propTypes = {
 MealsDetails.defaultProps = {
   match: {},
 };
+
 export default MealsDetails;

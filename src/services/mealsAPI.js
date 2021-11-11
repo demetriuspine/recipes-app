@@ -1,7 +1,6 @@
 export async function fetchIngredientAPI(ingrediente) {
   const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingrediente}`);
   const result = await response.json();
-  console.log(result);
   return result;
 }
 
