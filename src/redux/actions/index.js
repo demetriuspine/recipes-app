@@ -1,7 +1,7 @@
 export const REQUEST_SEARCHBUTTON = 'REQUEST_SEARCHBUTTON';
 export const GET_EMAIL = 'GET_EMAIL';
 export const GET_JSON = 'GET_JSON';
-export const GET_RANDOM = 'GET_RANDOM';
+export const FILTER = 'FILTER';
 
 export const requestSearchButton = () => ({
   type: REQUEST_SEARCHBUTTON,
@@ -17,7 +17,7 @@ export const getResults = (payload) => ({
   payload,
 });
 
-export const getRandom = (payload) => ({
-  type: GET_RANDOM,
+export const saveFilter = (payload) => ({
+  type: FILTER,
   payload,
 });
