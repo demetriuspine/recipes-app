@@ -5,6 +5,8 @@ import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import SearchCard from '../Components/SearchCard';
 
+const TWELVE = 12;
+
 function Meals({ history }) {
   const [mealSearch, setMealSearch] = useState([]);
   const [submitted, setSubmitted] = useState(false);
@@ -29,16 +31,17 @@ function Meals({ history }) {
         <Header title="Comidas" search meals type="meals" />
       </header>
       { mealSearch.length === 0 || !mealSearch.meals ? ''
-        : mealSearch.meals.map(({ strMeal, strMealThumb, idMeal }, index) => (
-          <SearchCard
-            key={ idMeal }
-            picture={ strMealThumb }
-            name={ strMeal }
-            id={ idMeal }
-            index={ index }
-            meals
-          />
-        )) }
+        : mealSearch.meals.filter((_, idx) => idx < TWELVE)
+          .map(({ strMeal, strMealThumb, idMeal }, index) => (
+            <SearchCard
+              key={ idMeal }
+              picture={ strMealThumb }
+              name={ strMeal }
+              id={ idMeal }
+              index={ index }
+              meals
+            />
+          )) }
       <Footer />
     </section>
   );

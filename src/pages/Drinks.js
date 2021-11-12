@@ -5,6 +5,8 @@ import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import SearchCard from '../Components/SearchCard';
 
+const TWELVE = 12;
+
 function Drinks({ history }) {
   const [drinkSearch, setDrinkSearch] = useState([]);
   const [submitted, setSubmitted] = useState(false);
@@ -28,16 +30,17 @@ function Drinks({ history }) {
         <Header title="Bebidas" search meals={ false } type="drinks" />
       </header>
       { drinkSearch.length === 0 || !drinkSearch.drinks ? ''
-        : drinkSearch.drinks.map(({ strDrink, strDrinkThumb, idDrink }, index) => (
-          <SearchCard
-            key={ idDrink }
-            picture={ strDrinkThumb }
-            name={ strDrink }
-            id={ idDrink }
-            index={ index }
-            meals={ false }
-          />
-        )) }
+        : drinkSearch.drinks.filter((_, idx) => idx < TWELVE)
+          .map(({ strDrink, strDrinkThumb, idDrink }, index) => (
+            <SearchCard
+              key={ idDrink }
+              picture={ strDrinkThumb }
+              name={ strDrink }
+              id={ idDrink }
+              index={ index }
+              meals={ false }
+            />
+          )) }
       {}
       <Footer />
 
