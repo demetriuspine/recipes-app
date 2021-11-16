@@ -2,6 +2,7 @@ import React from 'react';
 import { screen, cleanup, fireEvent } from '@testing-library/react';
 import Meals from '../pages/Meals';
 import renderWithRouterAndStore from './renderWithRouterAndStore';
+import DoneRecipes from '../pages/DoneRecipes';
 
 const PROFILE_TOP_BTN = 'profile-top-btn';
 const PAGE_TITLE = 'page-title';
@@ -18,22 +19,21 @@ describe('Req 9: Header has a title and renders a profile and search button', ()
     const searchButton = screen.getByTestId(SEARCH_TOP_BTN);
     fireEvent.click(searchButton);
     const searchInput = screen.getByTestId(SEARCH_INPUT);
+    expect(searchInput).toBeInTheDocument();
     expect(profileButton).toBeInTheDocument();
     expect(headerTitle).toBeInTheDocument();
-    fireEvent.click(searchButton);
-    expect(searchInput).toBeInTheDocument();
   });
 });
 
 describe('Req: 10: Header has a Profile and Search Icons', () => {
   it('should not render the Header on Login page', () => {
-    renderWithRouterAndStore('/');
+    renderWithRouterAndStore(<Meals />);
     const headerTitle = screen.getByTestId(PAGE_TITLE);
     expect(headerTitle).not.toBeInTheDocument();
   });
 
   it('should render the Header on DoneRecipes page', () => {
-    renderWithRouterAndStore('/pages/DoneRecipes');
+    renderWithRouterAndStore(<DoneRecipes />);
     const title = screen.queryByText(RECEITAS_FEITAS);
     const searchButton = screen.getByTestId(SEARCH_TOP_BTN);
     expect(title).toBeInTheDocument();
