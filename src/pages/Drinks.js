@@ -41,9 +41,7 @@ function Drinks({ history }) {
               meals={ false }
             />
           )) }
-      {}
       <Footer />
-
     </>
   );
 }
