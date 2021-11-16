@@ -51,7 +51,7 @@ function ExploreDrinksByIngredients() {
             aria-hidden="true"
           >
             <img
-              src={ `https://www.themealdb.com/images/ingredients/${e}.png` }
+              src={ `https://www.thecocktaildb.com/images/ingredients/${e}-Small.png` }
               alt="cocktail-ingredient"
               data-testid={ CARD_IMG(index) }
               height="160px"
