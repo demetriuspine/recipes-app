@@ -43,14 +43,14 @@ function DrinkDetails({ match: { params: { id } } }) {
     if (a.toLowerCase().includes(string) && b !== '') {
       return b;
     }
-    return undefined;
+    return null;
   }
 
   const entries = Object.entries(recipe);
   const ingredients = entries.map((e) => returnValue(e[0], e[1], 'ingredient'))
-    .filter((e) => e !== undefined);
+    .filter((e) => e !== null);
   const measurements = entries.map((e) => returnValue(e[0], e[1], 'measure'))
-    .filter((e) => e !== undefined);
+    .filter((e) => e !== null);
 
   return (
     <section>

@@ -35,9 +35,15 @@ function MealsDetails({ match: { params: { id } } }) {
     } else {
       getRecipe();
     }
-  }, [id]);
+  });
 
   const { strMealThumb, strMeal, strCategory, strInstructions, strYoutube } = recipe;
+
+  function embed(str) {
+    const array = typeof (str) === 'string' ? str.split('=') : '';
+    const prefix = 'https://www.youtube.com/embed/';
+    return prefix.concat(array[1]);
+  }
 
   function returnValue(a, b, string) {
     if (a.toLowerCase().includes(string) && b !== '') {
@@ -73,14 +79,19 @@ function MealsDetails({ match: { params: { id } } }) {
       </ul>
       <p data-testid={ INSTRUCTIONS }>{strInstructions}</p>
       <iframe
-        id="player"
-        type="text/html"
-        width="640"
-        height="360"
+        width="560"
+        height="315"
         data-testid={ VIDEO }
+        src={ embed(strYoutube) }
         title="YouTube video player"
-        src={ strYoutube }
         frameBorder="0"
+        allow="accelerometer;
+        autoplay;
+        clipboard-write;
+        encrypted-media;
+        gyroscope;
+        picture-in-picture"
+        allowFullScreen
       />
       {/* Desabilitado, função necessita do Card de receita
       {

@@ -7,8 +7,18 @@ const EXPLORE_BY_INGREDIENT = 'explore-by-ingredient';
 const EXPLORE_BY_AREA = 'explore-by-area';
 const EXPLORE_SURPRISE = 'explore-surprise';
 
+const randomEndpoint = 'https://www.themealdb.com/api/json/v1/1/random.php';
+
 function ExploreMeals() {
   const history = useHistory();
+
+  async function handleClick() {
+    const { meals } = await fetch(randomEndpoint)
+      .then((response) => response.json());
+    const routeNumber = meals[0].idMeal;
+    history.push(`/comidas/${routeNumber}`);
+  }
+
   return (
     <>
       <header>
@@ -31,7 +41,7 @@ function ExploreMeals() {
       <button
         type="button"
         data-testid={ EXPLORE_SURPRISE }
-        onClick={ () => history.push('/comidas/random') }
+        onClick={ () => handleClick() }
       >
         Me Surpreenda!
       </button>
