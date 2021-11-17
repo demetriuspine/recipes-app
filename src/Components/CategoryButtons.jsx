@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getResults } from '../redux/actions';
+import { getResults, isClicked } from '../redux/actions';
 
 const FIVE = 5;
 
@@ -54,7 +54,8 @@ class CategoryButtons extends Component {
   }
 
   async filterByCategory(category) {
-    const { categoriesToGlobalState, meal } = this.props;
+    const { categoriesToGlobalState, click, meal } = this.props;
+    click(false);
     if (meal) {
       const mealsCategories = await
       fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
@@ -95,10 +96,12 @@ class CategoryButtons extends Component {
 CategoryButtons.propTypes = {
   meal: PropTypes.bool.isRequired,
   categoriesToGlobalState: PropTypes.func.isRequired,
+  click: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   categoriesToGlobalState: (Results) => dispatch(getResults(Results)),
+  click: (bool) => dispatch(isClicked(bool)),
 });
 
 export default connect(null, mapDispatchToProps)(CategoryButtons);
