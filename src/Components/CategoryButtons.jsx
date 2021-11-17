@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { getResults } from '../redux/actions';
 
 const FIVE = 5;
 
@@ -19,7 +21,7 @@ function getValues(categories) {
   return categories.reduce((acc, cat) => [...acc, cat.strCategory], []);
 }
 
-export default class CategoryButtons extends Component {
+class CategoryButtons extends Component {
   constructor() {
     super();
     this.state = {
@@ -27,6 +29,7 @@ export default class CategoryButtons extends Component {
     };
     this.parsedMealsCategories = this.parsedMealsCategories.bind(this);
     this.parsedDrinksCategories = this.parsedDrinksCategories.bind(this);
+    this.filterByCategory = this.filterByCategory.bind(this);
   }
 
   async componentDidMount() {
@@ -50,6 +53,21 @@ export default class CategoryButtons extends Component {
     this.setState({ categories: allCategories.slice(0, FIVE) });
   }
 
+  async filterByCategory(category) {
+    const { categoriesToGlobalState, meal } = this.props;
+    if (meal) {
+      const mealsCategories = await
+      fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
+      const parsedApi = await mealsCategories.json();
+      categoriesToGlobalState(parsedApi);
+    } else {
+      const drinksCategories = await
+      fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`);
+      const parsedApi = await drinksCategories.json();
+      categoriesToGlobalState(parsedApi);
+    }
+  }
+
   render() {
     const { categories } = this.state;
     return (
@@ -62,6 +80,7 @@ export default class CategoryButtons extends Component {
                 type="button"
                 data-testid={ `${category}-category-filter` }
                 key={ i }
+                onClick={ () => this.filterByCategory(`${category}`) }
               >
                 {category}
               </button>
@@ -75,4 +94,11 @@ export default class CategoryButtons extends Component {
 
 CategoryButtons.propTypes = {
   meal: PropTypes.bool.isRequired,
+  categoriesToGlobalState: PropTypes.func.isRequired,
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  categoriesToGlobalState: (Results) => dispatch(getResults(Results)),
+});
+
+export default connect(null, mapDispatchToProps)(CategoryButtons);
