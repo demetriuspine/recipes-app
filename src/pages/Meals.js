@@ -18,14 +18,14 @@ function Meals({ history }) {
   const resultsFromGlobalState = useSelector((state) => (
     state.searchReducer.results));
 
-  useEffect(async () => {
+  useEffect(() => {
     setIsFetched(false);
     async function getInitialRecipes() {
       const recipes = await fetchNameAPI('');
       setInitialRecipes(recipes);
+      setIsFetched(true);
     }
-    await getInitialRecipes();
-    setIsFetched(true);
+    getInitialRecipes();
     // setInitialRecipes()
   }, []);
 
