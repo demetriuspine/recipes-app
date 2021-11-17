@@ -7,6 +7,7 @@ import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import SearchCard from '../Components/SearchCard';
 import { fetchDrinksNameAPI } from '../services/drinksAPI';
+import CategoryButtons from '../Components/CategoryButtons';
 
 const TWELVE = 12;
 
@@ -46,6 +47,7 @@ function Drinks({ history }) {
         <header>
           <Header title="Bebidas" search meals={ false } type="drinks" />
         </header>
+        <CategoryButtons meal={ false } />
         { drinkSearch.length === 0 || !drinkSearch.drinks
           ? initialRecipes.drinks.filter((_, idx) => idx < TWELVE)
             .map(({ strDrink, strDrinkThumb, idDrink }, index) => (

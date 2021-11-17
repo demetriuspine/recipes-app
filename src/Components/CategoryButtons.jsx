@@ -1,57 +1,76 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { Component } from 'react';
 
 const FIVE = 5;
 
-async function getMealsRecipes() {
+async function getMealsCategories() {
   const fetchApi = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
   const parseApi = await fetchApi.json();
   return parseApi;
 }
 
-async function getDrinksRecipes() {
+async function getDrinksCategories() {
   const fetchApi = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
   const parseApi = await fetchApi.json();
   return parseApi;
 }
 
 function getValues(categories) {
-  // Object.values(mealsRecipes.meals[0])
   return categories.reduce((acc, cat) => [...acc, cat.strCategory], []);
 }
 
-export default function CategoryButtons({ meal }) {
-  const [isFetched, setIsFetched] = useState(false);
-  const [categories, setCategories] = useState([]);
+export default class CategoryButtons extends Component {
+  constructor() {
+    super();
+    this.state = {
+      categories: [],
+    };
+    this.parsedMealsCategories = this.parsedMealsCategories.bind(this);
+    this.parsedDrinksCategories = this.parsedDrinksCategories.bind(this);
+  }
 
-  useEffect(async () => {
-    setIsFetched(false);
-    const mealsRecipes = await getMealsRecipes();
-    const drinksRecipes = await getDrinksRecipes();
+  async componentDidMount() {
+    const { meal } = this.props;
     if (meal === true) {
-      setCategories(mealsRecipes);
-      console.log(getValues(mealsRecipes.meals));
-    } setCategories(drinksRecipes);
-    // setIsFetched(true);
-  }, []);
+      await this.parsedMealsCategories();
+    } else {
+      await this.parsedDrinksCategories();
+    }
+  }
 
-  return (
-    isFetched ? (
-      <section>
-        {meal ? Object.values(categories.meals.slice(0, FIVE)).map((mealsCategories, i) => (
-          <button type="button" key={ i }>
-            {mealsCategories}
-          </button>
-        )) : Object.values(categories.drinks.slice(0, FIVE)).map((drinksCategories, i) => (
-          <button type="button" key={ i }>
-            {drinksCategories}
-          </button>
-        ))}
-      </section>
-    )
-      : 'Loading'
-  );
+  async parsedMealsCategories() {
+    const mealsCategories = await getMealsCategories();
+    const allCategories = getValues(mealsCategories.meals);
+    this.setState({ categories: allCategories.slice(0, FIVE) });
+  }
+
+  async parsedDrinksCategories() {
+    const drinksCategories = await getDrinksCategories();
+    const allCategories = getValues(drinksCategories.drinks);
+    this.setState({ categories: allCategories.slice(0, FIVE) });
+  }
+
+  render() {
+    const { categories } = this.state;
+    return (
+
+      categories.length !== 0
+        ? (
+          <section>
+            { categories.map((category, i) => (
+              <button
+                type="button"
+                data-testid={ `${category}-category-filter` }
+                key={ i }
+              >
+                {category}
+              </button>
+            )) }
+          </section>
+        )
+        : 'loading'
+    );
+  }
 }
 
 CategoryButtons.propTypes = {
