@@ -19,14 +19,14 @@ function Drinks({ history }) {
   const resultsFromGlobalState = useSelector((state) => (
     state.searchReducer.results));
 
-  useEffect(async () => {
+  useEffect(() => {
     setIsFetched(false);
     async function getInitialRecipes() {
       const recipes = await fetchDrinksNameAPI('');
       setInitialRecipes(recipes);
+      setIsFetched(true);
     }
-    await getInitialRecipes();
-    setIsFetched(true);
+    getInitialRecipes();
     // setInitialRecipes()
   }, []);
 
