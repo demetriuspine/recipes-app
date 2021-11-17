@@ -15,9 +15,12 @@ function Drinks({ history }) {
   const [drinkSearch, setDrinkSearch] = useState([]);
   const [isFetched, setIsFetched] = useState(false);
   const [initialRecipes, setInitialRecipes] = useState([]);
+  const [isClicked, setIsClicked] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const resultsFromGlobalState = useSelector((state) => (
     state.searchReducer.results));
+  const isClickedFromGlobalState = useSelector((state) => (
+    state.searchReducer.isClicked));
 
   useEffect(() => {
     setIsFetched(false);
@@ -36,11 +39,17 @@ function Drinks({ history }) {
   }, [resultsFromGlobalState]);
 
   useEffect(() => {
-    if (submitted === true && drinkSearch.drinks && drinkSearch.drinks.length === 1) {
+    if (submitted === true && drinkSearch.drinks && drinkSearch.drinks.length === 1
+      && isClicked) {
       history.push(`/bebidas/${drinkSearch.drinks[0].idDrink}`);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [drinkSearch]);
+
+  useEffect(() => {
+    setIsClicked(isClickedFromGlobalState);
+  }, [isClickedFromGlobalState]);
+
   return (
     isFetched ? (
       <>

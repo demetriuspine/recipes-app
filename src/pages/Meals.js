@@ -15,8 +15,11 @@ function Meals({ history }) {
   const [isFetched, setIsFetched] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [initialRecipes, setInitialRecipes] = useState([]);
+  const [isClicked, setIsClicked] = useState(false);
   const resultsFromGlobalState = useSelector((state) => (
     state.searchReducer.results));
+  const isClickedFromGlobalState = useSelector((state) => (
+    state.searchReducer.isClicked));
 
   useEffect(() => {
     setIsFetched(false);
@@ -35,11 +38,16 @@ function Meals({ history }) {
   }, [resultsFromGlobalState]);
 
   useEffect(() => {
-    if (submitted === true && mealSearch.meals && mealSearch.meals.length === 1) {
+    if (submitted === true && mealSearch.meals && mealSearch.meals.length === 1
+      && isClicked) {
       history.push(`/comidas/${mealSearch.meals[0].idMeal}`);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mealSearch]);
+
+  useEffect(() => {
+    setIsClicked(isClickedFromGlobalState);
+  }, [isClickedFromGlobalState]);
 
   return (
     isFetched ? (
