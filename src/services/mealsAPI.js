@@ -15,3 +15,9 @@ export async function fetchFirstLetterAPI(primeiraLetra) {
   const result = await response.json();
   return result;
 }
+
+export async function fetchMealCategoryAPI(categoria) {
+  const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?c=${categoria}`);
+  const result = await response.json();
+  return result;
+}
