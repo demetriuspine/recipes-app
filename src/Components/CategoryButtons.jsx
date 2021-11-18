@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getResults, isClicked } from '../redux/actions';
+import { fetchDrinksNameAPI } from '../services/drinksAPI';
+import { fetchNameAPI } from '../services/mealsAPI';
 
 const FIVE = 5;
 
@@ -30,6 +32,7 @@ class CategoryButtons extends Component {
     this.parsedMealsCategories = this.parsedMealsCategories.bind(this);
     this.parsedDrinksCategories = this.parsedDrinksCategories.bind(this);
     this.filterByCategory = this.filterByCategory.bind(this);
+    this.filterByAll = this.filterByAll.bind(this);
   }
 
   async componentDidMount() {
@@ -69,6 +72,18 @@ class CategoryButtons extends Component {
     }
   }
 
+  async filterByAll() {
+    const { categoriesToGlobalState, meal, click } = this.props;
+    click(false);
+    if (meal) {
+      const allMealsCategories = await fetchNameAPI('');
+      categoriesToGlobalState(allMealsCategories);
+    } else {
+      const allDrinksCategories = await fetchDrinksNameAPI('');
+      categoriesToGlobalState(allDrinksCategories);
+    }
+  }
+
   render() {
     const { categories } = this.state;
     return (
@@ -76,6 +91,13 @@ class CategoryButtons extends Component {
       categories.length !== 0
         ? (
           <section>
+            <button
+              type="button"
+              data-testid="All-category-filter"
+              onClick={ this.filterByAll }
+            >
+              All
+            </button>
             { categories.map((category, i) => (
               <button
                 type="button"
