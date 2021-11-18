@@ -3,6 +3,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 
+const copy = require('clipboard-copy');
+
 function DoneRecipesCard({ recipe: {
   id,
   name,
@@ -30,6 +32,12 @@ function DoneRecipesCard({ recipe: {
     </div>
   );
 
+  function handleClick(target) {
+    target.addEventListener('click', function () {
+    copy('This is some cool text')
+  })
+};
+
   return (
     <section>
       <Link to={ `/${type}s/${id}` }>
@@ -44,6 +52,7 @@ function DoneRecipesCard({ recipe: {
       </Link>
       <button
         type="button"
+        onClick={ handleClick }
       >
         <img
           src={ shareIcon }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../Components/Header';
 import DoneRecipesCard from '../Components/DoneRecipesCard';
+import Header from '../Components/Header';
 
 const mockedStorage = [
   {
