@@ -16,10 +16,17 @@ function Meals({ history }) {
   const [submitted, setSubmitted] = useState(false);
   const [initialRecipes, setInitialRecipes] = useState([]);
   const [isClicked, setIsClicked] = useState(false);
+  const [isCatClicked, setIsCatClicked] = useState(false);
   const resultsFromGlobalState = useSelector((state) => (
     state.searchReducer.results));
   const isClickedFromGlobalState = useSelector((state) => (
     state.searchReducer.isClicked));
+  const isClickedFromGlobal = useSelector((state) => (
+    state.searchReducer.isCategoryClicked));
+
+  useEffect(() => {
+    setIsCatClicked(isClickedFromGlobal);
+  }, [isClickedFromGlobal]);
 
   useEffect(() => {
     setIsFetched(false);
@@ -56,7 +63,7 @@ function Meals({ history }) {
           <Header title="Comidas" search meals type="meals" />
         </header>
         <CategoryButtons meal />
-        { mealSearch.length === 0 || !mealSearch.meals
+        { mealSearch.length === 0 || !mealSearch.meals || isCatClicked
           ? initialRecipes.meals.filter((_, idx) => idx < TWELVE)
             .map(({ strMeal, strMealThumb, idMeal }, index) => (
               <SearchCard

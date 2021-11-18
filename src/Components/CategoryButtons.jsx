@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getResults, isClicked } from '../redux/actions';
+import { getResults, isCategoryClicked, isClicked, setCategory } from '../redux/actions';
 import { fetchDrinksNameAPI } from '../services/drinksAPI';
 import { fetchNameAPI } from '../services/mealsAPI';
 
@@ -57,7 +57,12 @@ class CategoryButtons extends Component {
   }
 
   async filterByCategory(category) {
-    const { categoriesToGlobalState, click, meal } = this.props;
+    const { categoriesToGlobalState, categoryFromGlobal, dispatchCategory,
+      click, meal, isCategoryFromGlobal, categoryClicked } = this.props;
+    if (category === categoryFromGlobal) {
+      categoryClicked(!isCategoryFromGlobal);
+    }
+    dispatchCategory(category);
     click(false);
     if (meal) {
       const mealsCategories = await
@@ -119,11 +124,22 @@ CategoryButtons.propTypes = {
   meal: PropTypes.bool.isRequired,
   categoriesToGlobalState: PropTypes.func.isRequired,
   click: PropTypes.func.isRequired,
+  isCategoryFromGlobal: PropTypes.bool.isRequired,
+  categoryClicked: PropTypes.func.isRequired,
+  categoryFromGlobal: PropTypes.string.isRequired,
+  dispatchCategory: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   categoriesToGlobalState: (Results) => dispatch(getResults(Results)),
   click: (bool) => dispatch(isClicked(bool)),
+  categoryClicked: (negation) => dispatch(isCategoryClicked(negation)),
+  dispatchCategory: (cat) => dispatch(setCategory(cat)),
 });
 
-export default connect(null, mapDispatchToProps)(CategoryButtons);
+const mapStateToProps = (state) => ({
+  isCategoryFromGlobal: state.searchReducer.isCategoryClicked,
+  categoryFromGlobal: state.searchReducer.category,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryButtons);

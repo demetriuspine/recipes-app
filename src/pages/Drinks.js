@@ -16,11 +16,18 @@ function Drinks({ history }) {
   const [isFetched, setIsFetched] = useState(false);
   const [initialRecipes, setInitialRecipes] = useState([]);
   const [isClicked, setIsClicked] = useState(false);
+  const [isCatClicked, setIsCatClicked] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const resultsFromGlobalState = useSelector((state) => (
     state.searchReducer.results));
   const isClickedFromGlobalState = useSelector((state) => (
     state.searchReducer.isClicked));
+  const isClickedFromGlobal = useSelector((state) => (
+    state.searchReducer.isCategoryClicked));
+
+  useEffect(() => {
+    setIsCatClicked(isClickedFromGlobal);
+  }, [isClickedFromGlobal]);
 
   useEffect(() => {
     setIsFetched(false);
@@ -57,7 +64,7 @@ function Drinks({ history }) {
           <Header title="Bebidas" search meals={ false } type="drinks" />
         </header>
         <CategoryButtons meal={ false } />
-        { drinkSearch.length === 0 || !drinkSearch.drinks
+        { drinkSearch.length === 0 || !drinkSearch.drinks || isCatClicked
           ? initialRecipes.drinks.filter((_, idx) => idx < TWELVE)
             .map(({ strDrink, strDrinkThumb, idDrink }, index) => (
               <SearchCard
