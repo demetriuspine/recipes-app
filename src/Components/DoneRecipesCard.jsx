@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 
@@ -16,6 +16,8 @@ function DoneRecipesCard({ recipe: {
   alcoholicOrNot,
   type,
 }, index }) {
+  const [alert, setAlert] = useState('');
+
   const mealInfo = (
     <div>
       <p data-testid={ `${index}-horizontal-top-text` }>{ `${area} - ${category}` }</p>
@@ -32,11 +34,14 @@ function DoneRecipesCard({ recipe: {
     </div>
   );
 
-  function handleClick(target) {
-    target.addEventListener('click', function () {
-    copy('This is some cool text')
-  })
-};
+  function handleClick() {
+    setAlert('Link copiado!');
+    return (
+      copy(type === 'comida'
+        ? `http://localhost:3000/comidas/${id}`
+        : `http://localhost:3000/bebidas/${id}`)
+    );
+  }
 
   return (
     <section>
@@ -60,6 +65,7 @@ function DoneRecipesCard({ recipe: {
           data-testid={ `${index}-horizontal-share-btn` }
         />
       </button>
+      {alert}
       { type === 'comida'
         ? mealInfo
         : <p data-testid={ `${index}-horizontal-top-text` }>{ alcoholicOrNot }</p> }
