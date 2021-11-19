@@ -18,8 +18,11 @@ module.exports = ( on ) => {
             return clipboardy.readSync();
         }
     });
+<<<<<<< HEAD
     // on('before:browser:launch', (browser = {}, launchOptions) => {
     //     launchOptions.args.push('--disable-dev-shm-usage')
     //      return launchOptions
     // });
+=======
+>>>>>>> 8e00840a39e99448c9d7884e2d73b29813fb4cce
 };

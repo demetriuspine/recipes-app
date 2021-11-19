@@ -5,21 +5,29 @@ import { Link } from 'react-router-dom';
 export default function SearchCard({ picture, name, id, meals, index }) {
   const linkToMeals = (
     <Link to={ `/comidas/${id}` } data-testid={ `${index}-card-name` }>
-      {name}
+      <section data-testid={ `${index}-recipe-card` }>
+        <img src={ picture } alt={ name } data-testid={ `${index}-card-img` } />
+        { name }
+      </section>
     </Link>
   );
 
   const linkToDrink = (
     <Link to={ `/bebidas/${id}` } data-testid={ `${index}-card-name` }>
-      {name}
+      <section data-testid={ `${index}-recipe-card` }>
+        <img
+          src={ picture }
+          alt={ name }
+          data-testid={ `${index}-card-img` }
+          tested={ `${index}-card-img` }
+        />
+        { name }
+      </section>
     </Link>
   );
 
   return (
-    <section data-testid={ `${index}-recipe-card` }>
-      <img src={ picture } alt={ name } data-testid={ `${index}-card-img` } />
-      { meals ? linkToMeals : linkToDrink }
-    </section>
+    meals ? linkToMeals : linkToDrink
   );
 }
 

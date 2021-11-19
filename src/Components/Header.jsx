@@ -11,7 +11,7 @@ import {
   fetchDrinksNameAPI,
   fetchDrinksFirstLetterAPI,
 } from '../services/drinksAPI';
-import { GET_JSON } from '../redux/actions';
+import { GET_JSON, IS_CLICKED } from '../redux/actions';
 
 function Header({ title, search, meals, type }) {
   const [searchInput, setSearchInput] = useState(false);
@@ -28,6 +28,7 @@ function Header({ title, search, meals, type }) {
   }, [results, dispatch]);
 
   async function handleClickMeals() {
+    dispatch({ type: IS_CLICKED, payload: true });
     switch (radioValue) {
     case 'ingrediente':
       setResults(await fetchIngredientAPI(searchInputValue));
@@ -51,6 +52,7 @@ function Header({ title, search, meals, type }) {
   }
 
   async function handleClickDrinks() {
+    dispatch({ type: IS_CLICKED, payload: true });
     switch (radioValue) {
     case 'ingrediente':
       setResults(await fetchDrinksIngredientAPI(searchInputValue));
