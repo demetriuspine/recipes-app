@@ -3,12 +3,16 @@ import { useHistory } from 'react-router';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 
+const RECIPE_CARD = (index) => `${index}-recipe-card`;
+const CARD_IMG = (index) => `${index}-card-img`;
+const CARD_NAME = (index) => `${index}-card-name`;
+
 const EXPLORE_BY_AREA_DROPDOWN = 'explore-by-area-dropdown';
-const AREA_OPTION = (area) => `${area.toLowerCase()}-option`;
+const AREA_OPTION = (area) => `${area}-option`;
 
 const locations = 'https://www.themealdb.com/api/json/v1/1/list.php?a=list';
-const fetchAll = 'https://www.themealdb.com/api/json/v1/1/search.php?f=a';
-const byCountry = (location) => `https://www.themealdb.com/api/json/v1/1/filter.php?a=${location}`;
+const fetchAll = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+const byCountry = (country) => `https://www.themealdb.com/api/json/v1/1/filter.php?a=${country}`;
 
 function MealsByArea() {
   const history = useHistory();
@@ -29,7 +33,7 @@ function MealsByArea() {
 
   useEffect(() => {
     async function getRecipes() {
-      const { meals } = await fetch(location !== 'All' ? byCountry(location) : fetchAll)
+      const { meals } = await fetch(location === 'All' ? fetchAll : byCountry(location))
         .then((results) => results.json());
       setRecipes(meals);
     }
@@ -63,14 +67,16 @@ function MealsByArea() {
             onClick={ () => history.push(`/comidas/${idMeal}`) }
             tabIndex="0"
             aria-hidden="true"
+            data-testid={ RECIPE_CARD(index) }
           >
             <img
               src={ strMealThumb }
               alt={ `${strMeal}-dish-plate` }
               height="160px"
               width="120px"
+              data-testid={ CARD_IMG(index) }
             />
-            <h3>{strMeal}</h3>
+            <h3 data-testid={ CARD_NAME(index) }>{strMeal}</h3>
           </div>))
       }
       <Footer />
