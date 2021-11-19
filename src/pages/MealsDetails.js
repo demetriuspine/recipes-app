@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import CarouselDrinks from '../Components/CarouselDrinks';
+import StartRecipeBtn from '../Components/StartRecipeBtn';
 import LikeAndShare from '../Components/LikeAndShare';
 
 const RECIPE_PHOTO = 'recipe-photo';
 const RECIPE_TITLE = 'recipe-title';
-const SHARE_BTN = 'share-btn';
-const FAVORITE_BTN = 'favorite-btn';
 const RECIPE_CATEGORY = 'recipe-category';
 const INGREDIENT_NAME_AND_MEASURE = (index) => `${index}-ingredient-name-and-measure`;
 const INSTRUCTIONS = 'instructions';
 const VIDEO = 'video';
-const START_RECIPE_BTN = 'start-recipe-btn';
 
 const randomEndpoint = 'https://www.themealdb.com/api/json/v1/1/random.php';
 const idEndpoint = (id) => `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
@@ -47,9 +45,7 @@ function MealsDetails({ match: { params: { id } } }) {
     }
   });
 
-  useEffect(() => {
-    getDrinks();
-  }, []);
+  useEffect(() => { getDrinks(); }, []);
 
   const { strMealThumb, strMeal, strCategory, strInstructions, strYoutube } = recipe;
 
@@ -77,13 +73,7 @@ function MealsDetails({ match: { params: { id } } }) {
       <h1>Detalhes</h1>
       <img data-testid={ RECIPE_PHOTO } alt={ `${strMeal} dish` } src={ strMealThumb } />
       <h2 data-testid={ RECIPE_TITLE }>{strMeal}</h2>
-      <LikeAndShare />
-      <button data-testid={ SHARE_BTN } type="button">
-        Compartilhar
-      </button>
-      <button data-testid={ FAVORITE_BTN } type="button">
-        Favorito
-      </button>
+      <LikeAndShare id={ id } />
       <p data-testid={ RECIPE_CATEGORY }>{strCategory}</p>
       <ul>
         { ingredients.map((e, index) => (
@@ -109,13 +99,7 @@ function MealsDetails({ match: { params: { id } } }) {
         allowFullScreen
       />
       <CarouselDrinks cocktails={ cocktails } />
-      <button
-        data-testid={ START_RECIPE_BTN }
-        type="button"
-        style={ { position: 'fixed', bottom: '0px' } }
-      >
-        Iniciar Receita
-      </button>
+      <StartRecipeBtn id={ id } type="comidas" />
     </section>
   );
 }
