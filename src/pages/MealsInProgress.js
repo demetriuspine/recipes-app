@@ -1,60 +1,79 @@
 import React, { useEffect, useState } from 'react';
-
-const RECIPE_PHOTO = 'recipe-photo';
-const RECIPE_TITLE = 'recipe-title';
-const SHARE_BTN = 'share-btn';
-const FAVORITE_BTN = 'favorite-btn';
-const RECIPE_CATEGORY = 'recipe-category';
-const INGREDIENT_STEP = (index) => `${index}-ingredient-step`;
-const INSTRUCTIONS = 'instructions';
-const FINISH_RECIPE_BTN = 'finish-recipe-btn';
-
-const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata';
+import { useHistory } from 'react-router';
+import shareIcon from '../images/shareIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import CheckboxIngredient from '../Components/CheckboxIngrendient';
 
 function MealsInProgress() {
+  const url = (index) => `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${index}`;
   const [recipe, setRecipe] = useState([]);
-
+  const history = useHistory();
+  const test = 52771;
   useEffect(() => {
     async function getRecipe() {
-      await fetch(url)
-        .then((results) => results.json())
-        .then((data) => setRecipe(data.meals[0]));
+      await fetch(url(test))
+        .then((response) => response.json())
+        .then((data) => setRecipe(data.meals));
     }
     getRecipe();
   }, []);
-
   function returnValue(a, b, string) {
-    if (a.toLowerCase().includes(string) && b !== '') {
+    if (a.toLowerCase().includes(string) && b) {
       return b;
     }
     return undefined;
   }
 
-  const { strMealThumb, strMeal, strCategory, strInstructions } = recipe;
-  const entries = Object.entries(recipe);
+  const entries = recipe[0] ? Object.entries(recipe[0]) : [];
   const ingredients = entries.map((e) => returnValue(e[0], e[1], 'ingredient'))
     .filter((e) => e !== undefined);
-
+  const measures = entries.map((e) => returnValue(e[0], e[1], 'measure'))
+    .filter((e) => e !== undefined);
   return (
-    <section>
-      <p>MealsInProgress</p>
-      <img
-        data-testid={ RECIPE_PHOTO }
-        alt={ `${strMeal}-meal-dish` }
-        src={ strMealThumb }
-      />
-      <h2 data-testid={ RECIPE_TITLE }>{strMeal}</h2>
-      <button type="button" data-testid={ SHARE_BTN }>Compartilhar</button>
-      <button type="button" data-testid={ FAVORITE_BTN }>Favoritar</button>
-      <p data-testid={ RECIPE_CATEGORY }>{strCategory}</p>
-      {
-        ingredients.map((e, index) => (
-          <p key={ index } data-testid={ INGREDIENT_STEP(index) }>{e}</p>
-        ))
-      }
-      <p data-testid={ INSTRUCTIONS }>{ strInstructions }</p>
-      <button type="button" data-testid={ FINISH_RECIPE_BTN }>Finalizar</button>
-    </section>
+    <>
+      { recipe.map((rec) => (
+        <main key={ rec.idMeal }>
+          <h2 data-testid="recipe-title">
+            {rec.strMeal}
+          </h2>
+          <img
+            src={ rec.strMealThumb }
+            data-testid="recipe-photo"
+            alt="foto de receita"
+          />
+          <img
+            src={ shareIcon }
+            data-testid="share-btn"
+            alt="botão de compartilhar"
+          />
+          <img
+            src={ whiteHeartIcon }
+            data-testid="favorite-btn"
+            alt="botão de faovritar"
+          />
+          <p data-testid="recipe-category">
+            { rec.strCategory }
+          </p>
+          <p data-testid="instructions">
+            {rec.strInstructions}
+          </p>
+          <button
+            type="button"
+            data-testid="finish-recipe-btn"
+            onClick={ () => history.push('/receitas-feitas') }
+          >
+            Finalizar Receita
+          </button>
+        </main>
+      ))}
+      { ingredients.map((ingredient, index) => (
+        <CheckboxIngredient
+          key={ index }
+          index={ index }
+          ingredient={ ingredient }
+          measure={ measures[index] }
+        />))}
+    </>
   );
 }
 

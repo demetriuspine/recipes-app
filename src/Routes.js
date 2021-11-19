@@ -33,7 +33,7 @@ function Routes() {
       />
       <Route
         exact
-        path="/bebidas/{id-da-receita}/in-progress"
+        path="/bebidas/:id/in-progress"
         component={ DrinksInProgress }
       />
       <Route exact path="/explorar" component={ Explore } />
