@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import CheckboxIngredient from '../Components/CheckboxIngrendient';
 
-function MealsInProgress() {
+function MealsInProgress({ match: { params: { id } } }) {
   const url = (index) => `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${index}`;
   const [recipe, setRecipe] = useState([]);
   const history = useHistory();
-  const test = 52771;
   useEffect(() => {
     async function getRecipe() {
-      await fetch(url(test))
+      await fetch(url(id))
         .then((response) => response.json())
         .then((data) => setRecipe(data.meals));
     }
@@ -76,5 +76,17 @@ function MealsInProgress() {
     </>
   );
 }
+
+MealsInProgress.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }),
+  }),
+};
+
+MealsInProgress.defaultProps = {
+  match: {},
+};
 
 export default MealsInProgress;
